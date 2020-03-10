@@ -6,7 +6,7 @@ const bc = require('bigint-conversion');
 const bcu = require('bigint-crypto-utils');
 const _ONE = BigInt(1);
 
-module.exports.keyGenerator =   function (bitLength){
+module.exports.keyGenerator = function (bitLength){
     let p, q, n, phi, e, d;
 
     let prvKeys = {};
@@ -27,10 +27,10 @@ module.exports.keyGenerator =   function (bitLength){
     const publicKey = new PublicKey(e, n);
     const privateKey = new PrivateKey(d, n);
 
-    //console.log("e: " + bc.bigintToHex(e));
-    //console.log("d: " + bc.bigintToHex(d));
-    //console.log("n: " + bc.bigintToHex(n));
-    //console.log("e inv: " + bc.bigintToHex(bcu.modInv(d, phi)));
+    console.log("e: " + bc.bigintToHex(e));
+    console.log("d: " + bc.bigintToHex(d));
+    console.log("n: " + bc.bigintToHex(n));
+    console.log("e inv: " + bc.bigintToHex(bcu.modInv(d, phi)));
 
     return {publicKey: publicKey, privateKey: privateKey};
 };
@@ -48,7 +48,15 @@ const PublicKey = class PublicKey{
         m = bc.textToBigint(message);
         //c = m;
         c = bcu.modPow(m, this.e, this.n);
+        console.log("Encrypted...");
         return bc.bigintToText(c);
+    }
+
+    verify(signature){
+        let s, m;
+        s = bc.textToBigint(signature);
+        m = bcu.modPow(s, this.e, this.n);
+        return bc.bigintToText(m);
     }
 };
 
@@ -64,5 +72,12 @@ const PrivateKey = class PrivateKey{
         //m = c;
         m = bcu.modPow(c, this.d, this.n);
         return bc.bigintToText(m);
+    }
+
+    sign(message){
+        let s, m;
+        m = bc.textToBigint(message);
+        s = bcu.modPow(m, this.d, this.n);
+        return bc.bigintToText(s);
     }
 };
