@@ -12,6 +12,6 @@ export default{
             format: 'esm'
         }
     ],
-    external: ['bigint-crypto-utils']
-    //external: ['bigint-crypto-utils','bigint-conversion']
+    //external: ['bigint-crypto-utils']
+    external: ['bigint-crypto-utils','bigint-conversion']
 };
