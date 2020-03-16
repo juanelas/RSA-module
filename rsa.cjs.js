@@ -1,11 +1,13 @@
 'use strict';
 
-import * as bcu from 'bigint-crypto-utils';
-import * as bc from 'bigint-conversion';
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var bcu = require('bigint-crypto-utils');
+var bc = require('bigint-conversion');
 
 const _ONE = BigInt(1);
 
-export class rsa {
+class rsa {
     constructor(bitLength) {
         do {
             this.p = bcu.primeSync(Math.round(bitLength / 2) + 1);
@@ -64,3 +66,5 @@ export class rsa {
         else return true;
     }
 }
+
+exports.rsa = rsa;

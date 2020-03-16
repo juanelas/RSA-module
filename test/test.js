@@ -1,11 +1,16 @@
 'use strict';
 
-const rsa2 = require('../src/rsa2');
+//import * as Rsa from '../src/rsa';
+//import * as bc from 'bigint-conversion';
+const Rsa = require('../rsa.cjs');
 const bc = require('bigint-conversion');
-const bitLength = 256;
 
-let rsa = new rsa2(bitLength);
+const bitLength = 1024*4;
+const message = "Hello world!";
+const hash = "hashoooo";
+let rsa = new Rsa.rsa(bitLength);
 
-console.log("Decrypted encrypted message: " + bc.bigintToText(rsa.decrypt(rsa.encrypt(BigInt(bc.textToBigint("Hello BB"))))));
+//rsa.decrypt(rsa.encrypt(bc.textToBigint(message)));
 
-console.log("Verified signed message: " + bc.bigintToText(rsa.verify(rsa.sign(BigInt(bc.textToBigint("Message to sign"))))));
+console.log("Decrypted message: " + rsa.decrypt(rsa.encrypt(message)));
+console.log("Verified hash: " + rsa.verify(rsa.sign(hash)));
