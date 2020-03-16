@@ -6,6 +6,10 @@ import * as bc from 'bigint-conversion';
 const _ONE = BigInt(1);
 
 export class rsa {
+    /**
+     *
+     * @param {number} bitLength
+     */
     constructor(bitLength) {
         do {
             this.p = bcu.primeSync(Math.round(bitLength / 2) + 1);
@@ -20,6 +24,11 @@ export class rsa {
     }
 
     // encrypt message function
+    /**
+     *
+     * @param {number} m
+     * @returns {bigint|null}
+     */
     encrypt(m) {
         m = bc.textToBigint(m);
         if (this.valVerify(m)) {
@@ -29,6 +38,11 @@ export class rsa {
     }
 
     // verify signed hash function
+    /**
+     *
+     * @param {number} s
+     * @returns {string|null}
+     */
     verify(s) {
         if (this.valVerify(s)) {
             console.log("Message to verify > n");
@@ -37,6 +51,11 @@ export class rsa {
     }
 
     // decrypt message function
+    /**
+     *
+     * @param {number} c
+     * @returns {string|null}
+     */
     decrypt(c) {
         if (this.valVerify(c)) {
             console.log("Message to decrypt > n");
@@ -45,6 +64,11 @@ export class rsa {
     }
 
     // sign hash function
+    /**
+     *
+     * @param {number} h
+     * @returns {bigint|null}
+     */
     sign(h) {
         h = bc.textToBigint(h);
         if (this.valVerify(h)) {
@@ -53,12 +77,22 @@ export class rsa {
         } else return bcu.modPow(h, this.d, this.n);
     }
     // verify that message is smaller than n
+    /**
+     *
+     * @param {number} m
+     * @returns {boolean}
+     */
     valVerify(m) {
         if ((m > this.n))
             console.log("message is greater than n");
         return m > this.n;
     }
     // verify bitLength
+    /**
+     *
+     * @param {number} bl
+     * @returns {boolean}
+     */
     bitLengthVerify(bl) {
         if (bl % 8) return false;
         else return true;
